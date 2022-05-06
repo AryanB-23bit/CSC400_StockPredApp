@@ -1,0 +1,396 @@
+<MainScreen>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDBoxLayout:
+            size_hint_y:.25
+            padding:dp(25)
+            MDBoxLayout:
+                orientation:"vertical"
+                MDLabel:
+                    text:"Plutus"
+                    font_style:"H4"
+                MDBoxLayout:
+                    adaptive_size:True
+                    spacing:dp(10)
+        MDGridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            ElementCard:
+                image:"images/bearbull.png"
+                text:"Predict top American Indexes"
+                on_release:root.manager.current = "Predict1"
+                on_press:root.manager.transition.direction = "right"
+            ElementCard:
+                image:"images/search.png"
+                text:"Search Stocks"
+                on_release:root.manager.current = "Search"
+                on_press:root.manager.transition.direction = "left"
+<MDSearchScreen>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton
+            icon:"arrow-left"
+            on_release:root.manager.current = "Main"
+            on_press:root.manager.transition.direction = "right"
+            on_release:root.ids.search_field.text = ""
+            on_release:root.ids.search_label1.text = ""
+            on_release:root.ids.comp_name.text = ""
+            on_release:root.ids.plot1.source = ""
+            on_press:root.ids.plot1.opacity = 0
+        MDGridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            MDTextField:
+                id:search_field
+                font_size:dp(20)
+                mode:"rectangle"
+                color_mode:"accent"
+                hint_text:"Search for a stock"
+                helper_text:"Enter a proper stock ticker"
+                helper_text_mode:"on_focus"
+            MDFillRoundFlatIconButton:
+                text:"Search"
+                font_size:dp(20)
+                icon:"chart-line"
+                on_release:root.get_data()
+                on_release:root.ids.plot1.source = ""
+                on_press:root.ids.plot1.opacity = 100
+#        MDIconButton:
+#            id: more_info
+#            icon:"information-variant"
+#            opacity:0
+#            disabled: True
+#            md_bg_color: app.theme_cls.primary_color
+#            icon_size:dp(50)
+#            pos_hint:{"center_x":.5}
+#            on_release:root.manager.current = ""
+#            on_press:root.manager.transition.direction = ""
+        Image:
+            id:plot1
+            opacity:0
+            pos_hint:{"center_y":.1}
+            allow_stretch:True
+            nocache:True
+        MDGridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            MDLabel:
+                id:comp_name
+                text:""
+                font_style:"H4"
+
+            MDLabel:
+                id:search_label1
+                text:""
+                font_size:dp(17)
+                color:app.theme_cls.primary_color
+                halign:"center"
+                markup:True
+<MDIndex>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Main"
+            on_press:root.manager.transition.direction = "left"
+            ripple_behavior:True
+        MDGridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            NewCard:
+                md_bg_color:app.theme_cls.primary_color
+                text:"Model Test vs Actual Accuracy"
+                subtext:"Click on the card for more info(calculation based on S&P500)"
+                on_release:root.manager.current = "TestPred"
+                on_press:root.manager.transition.direction = "down"
+            NewCard:
+                md_bg_color:69/255,55/255,86/255,1
+                text:"Model Train vs Actual Accuracy"
+                subtext:"Click on the card for more info(calculation based on S&P500)"
+                on_release:root.manager.current = "TrainPred"
+                on_press:root.manager.transition.direction = "up"
+            NewCard:
+                md_bg_color:app.theme_cls.accent_color
+                text:"Error throughout the dates"
+                text_color: "black"
+                subtext:"Click on the card for more info(calculation based on S&P500)"
+                on_release:root.manager.current = "ErrorCalc"
+                on_press:root.manager.transition.direction = "down"
+            ElementCard:
+                md_bg_color:20/255,40/255,80/255,1
+                image:"images/sp500.jpg"
+                text:"Predictions on S&P500 model"
+                on_press:root.manager.current = "PredSP500"
+                on_press:root.manager.transition.direction = "up"
+            ElementCard:
+                md_bg_color:1/255,1/255,1/255,1
+                image:"images/dj.svg.png"
+                text:"Predictions on Dow Jones model"
+                on_release:root.manager.current = "PredDJ"
+                on_press:root.manager.transition.direction = "down"
+            ElementCard:
+                md_bg_color:50/255,50/255,50/255,1
+                image:"images/nasdaq.svg.png"
+                text:"Predictions on NASDAQ model"
+                on_release:root.manager.current = "PredNSD"
+                on_press:root.manager.transition.direction = "up"
+<TestPred>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Predict1"
+            on_press:root.manager.transition.direction = "up"
+        MDGridLayout:
+            cols:1
+            SubCards:
+                image:"images/test.png"
+<TrainPred>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Predict1"
+            on_press:root.manager.transition.direction = "down"
+        MDGridLayout:
+            cols:1
+            SubCards:
+                image:"images/train.png"
+<ErrorCalc>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Predict1"
+            on_press:root.manager.transition.direction = "up"
+
+        MDGridLayout:
+            cols:1
+            SubCards:
+                image:"images/error.png"
+<PredSP500>
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Predict1"
+            on_press:root.manager.transition.direction = "down"
+            on_release:root.ids.sp_img.source = ""
+            on_release:root.ids.data1.text = ""
+            on_release:root.ids.data2.text = ""
+            on_release:root.ids.data3.text = ""
+            on_release:root.ids.data4.text = ""
+            on_release:root.ids.data5.text = ""
+
+        MDBoxLayout:
+            orientation:'vertical'
+            md_bg_color:255/255,255/255,255/255,1
+            Image:
+                id:sp_img
+                source: ''
+                nocache: True
+        GridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            MDLabel:
+                id:comp_name
+                text:"S&P 500 (^GSPC)"
+                font_size:dp(30)
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    id: data1
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data2
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data3
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data4
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data5
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+<PredDJ>
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Predict1"
+            on_press:root.manager.transition.direction = "up"
+            on_release:root.ids.sp_img1.source = ""
+            on_release:root.ids.data6.text = ""
+            on_release:root.ids.data7.text = ""
+            on_release:root.ids.data8.text = ""
+            on_release:root.ids.data9.text = ""
+            on_release:root.ids.data10.text = ""
+        MDBoxLayout:
+            orientation:'vertical'
+            md_bg_color:255/255,255/255,255/255,1
+            Image:
+                id:sp_img1
+                source: ''
+                nocache: True
+        GridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            MDLabel:
+                id:comp_name
+                text:"Dow Jones Industrial Average (^DJI)"
+                font_size:dp(30)
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    id: data6
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data7
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data8
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data9
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data10
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+<PredNSD>
+    MDBoxLayout:
+        orientation:'vertical'
+        MDIconButton:
+            icon:"arrow-left"
+            on_release:root.manager.current = "Predict1"
+            on_press:root.manager.transition.direction = "down"
+            on_release:root.ids.sp_img2.source = ""
+            on_release:root.ids.data11.text = ""
+            on_release:root.ids.data12.text = ""
+            on_release:root.ids.data13.text = ""
+            on_release:root.ids.data14.text = ""
+            on_release:root.ids.data15.text = ""
+
+        MDBoxLayout:
+            orientation:'vertical'
+            md_bg_color:255/255,255/255,255/255,1
+            Image:
+                id:sp_img2
+                source: ''
+                nocache: True
+        GridLayout:
+            size_hint_y:.75
+            cols:2
+            padding:[dp(15),dp(15),dp(15),dp(35)]
+            spacing:dp(15)
+            MDLabel:
+                id:comp_name
+                text:"NASDAQ Composite (^IXIC)"
+                font_size:dp(30)
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    id: data11
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data12
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data13
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data14
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+                MDLabel:
+                    id: data15
+                    text:""
+                    font_size:dp(17)
+                    color:app.theme_cls.primary_color
+<ElementCard@MDCard>:
+    md_bg_color:69/255,55/255,86/255,1
+    padding:dp(16)
+    spacing:dp(17)
+    radius:dp(30)
+    ripple_behavior: True
+    image:''
+    text:""
+    subtext:''
+    orientation:'vertical'
+    Image:
+        source:root.image
+    MDBoxLayout:
+        orientation:'vertical'
+        MDLabel:
+            halign:"center"
+            text:root.text
+            font_style:"H6"
+        MDLabel:
+            halign:"center"
+            font_style:"Caption"
+            text:root.subtext
+<NewCard@MDCard>:
+    padding:dp(16)
+    spacing:dp(17)
+    radius:dp(30)
+    ripple_behavior: True
+    text:""
+    subtext:''
+    orientation:'vertical'
+    MDBoxLayout:
+        orientation:'vertical'
+        MDLabel:
+            halign:"center"
+            text:root.text
+            font_style:"H5"
+        MDLabel:
+            halign:"center"
+            font_style:"Caption"
+            text:root.subtext
+            font_size: dp(15)
+<SubCards@MDCard>:
+    md_bg_color:255/255,255/255,255/255,1
+    radius:dp(20)
+    image:''
+    Image:
+        source:root.image
+        nocache:True
