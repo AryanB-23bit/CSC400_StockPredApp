@@ -145,6 +145,9 @@ class PredNSD(Screen):
 
 
 class StockApp(MDApp):
+    from kivy.core.window import Window
+    Window.size = (470, 900)
+
     def build(self):
         self.title = 'Plutus - Stock Market Forecast'
         self.theme_cls.theme_style = "Dark"
